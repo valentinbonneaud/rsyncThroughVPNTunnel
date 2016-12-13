@@ -9,6 +9,6 @@ isSudo() {
 }
 
 getParam() {
-	p=$(cat conf.txt | grep "$1=" | cut -d ' ' -f2-)
+	p=$(cat conf.txt | grep "$1=" | cut -d '=' -f2-)
 	echo "$p"
 }
