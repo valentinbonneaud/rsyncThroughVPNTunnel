@@ -1,0 +1,6 @@
+configFileVPN=/path/to/server.ovpn
+targetUser=remoteUser
+target=remoteIP
+targetPath=/path/to/remote/folder/to/rsync
+localPath=/local/path/to/rsync
+lockFile=/tmp/getFiles.lock
