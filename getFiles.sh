@@ -32,18 +32,13 @@ getFiles_core() {
 		return 1
 	fi
 
-	files=$(ssh -o ConnectTimeout=10 "$targetUser"@"$target" "ls $targetPath")
 
-	if [ $? -ne 0 ]; then
-		echo "Problem on the ssh connection"
-		return 2
-	fi
 
-	for f in $files; do
+	ssh -o ConnectTimeout=10 "$targetUser"@"$target" "ls $targetPath" | while read -r line; do 
 		echo "new file to download: $f"
-		rsync -avhPS "$targetUser"@"$target":"$targetPath/$f" "$localPath"
+		rsync -avhPSL "$targetUser"@"$target":"$targetPath/$f" "$localPath"
 		if [ $? -eq 0 ]; then
-			ssh "$targetUser"@"$target" "rm $targetPath/$f"
+			ssh "$targetUser"@"$target" "rm -r $targetPath/$f"
 		else
 			echo "Something strange happened during the rsync of $f"
 		fi
